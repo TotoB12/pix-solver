@@ -1,0 +1,64 @@
+{
+    "manifest_version": 3,
+    "name": "Exam Helper",
+    "version": "1.0",
+    "description": "Screenshot and analyze exam content",
+    "permissions": [
+        "activeTab",
+        "storage",
+        "scripting",
+        "commands"
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {}
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "html2canvas.min.js",
+                "content.js"
+            ],
+            "css": [
+                "content.css"
+            ]
+        }
+    ],
+    "commands": {
+        "take-screenshot": {
+            "suggested_key": {
+                "default": "Alt+S"
+            },
+            "description": "Take a screenshot"
+        },
+        "analyze-screenshots": {
+            "suggested_key": {
+                "default": "Alt+A"
+            },
+            "description": "Analyze screenshots"
+        },
+        "clear-screenshots": {
+            "suggested_key": {
+                "default": "Alt+Q"
+            },
+            "description": "Clear screenshots"
+        }
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "images/*",
+                "html2canvas.min.js"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Exam Helper</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      width: 280px;
+      padding: 15px;
+      background-color: #f8f9fa;
+      color: #333;
+    }
+    
+    h1 {
+      font-size: 16px;
+      margin: 0 0 15px 0;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    .shortcuts {
+      margin-bottom: 15px;
+    }
+    
+    .shortcut {
+      display: flex;
+      margin-bottom: 8px;
+      align-items: center;
+    }
+    
+    .key {
+      background-color: #e9ecef;
+      border: 1px solid #ced4da;
+      border-radius: 3px;
+      padding: 2px 6px;
+      font-family: monospace;
+      margin-right: 8px;
+      font-size: 12px;
+    }
+    
+    .description {
+      font-size: 13px;
+    }
+    
+    .buttons {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    
+    button {
+      padding: 6px 12px;
+      background-color: #0d6efd;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      flex: 1;
+    }
+    
+    button:hover {
+      background-color: #0b5ed7;
+    }
+    
+    button#clearBtn {
+      background-color: #dc3545;
+    }
+    
+    button#clearBtn:hover {
+      background-color: #bb2d3b;
+    }
+    
+    .note {
+      font-size: 11px;
+      color: #6c757d;
+      margin-top: 15px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <h1>Exam Helper</h1>
+  
+  <div class="shortcuts">
+    <div class="shortcut">
+      <span class="key">Alt+S</span>
+      <span class="description">Take a screenshot</span>
+    </div>
+    <div class="shortcut">
+      <span class="key">Alt+A</span>
+      <span class="description">Analyze screenshots</span>
+    </div>
+    <div class="shortcut">
+      <span class="key">Alt+Q</span>
+      <span class="description">Clear all data</span>
+    </div>
+  </div>
+  
+  <div class="buttons">
+    <button id="showBtn">Show Overlay</button>
+    <button id="clearBtn">Clear All</button>
+  </div>
+  
+  <p class="note">The extension will remain active on this page until you close it.</p>
+  
+  <script src="html2canvas.min.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

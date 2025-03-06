@@ -1,0 +1,142 @@
+/* Styles for the extension overlay */
+#exam-helper-overlay {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 320px;
+    max-height: 450px;
+    background-color: rgba(30, 30, 30, 0.85);
+    color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 2147483647; /* Highest possible z-index */
+    display: flex;
+    flex-direction: column;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    transition: opacity 0.2s ease;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+  }
+  
+  #exam-helper-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  #exam-helper-close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+  }
+  
+  #exam-helper-close:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  #exam-helper-screenshots {
+    display: flex;
+    overflow-x: auto;
+    padding: 10px;
+    gap: 5px;
+    max-height: 100px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+  }
+  
+  #exam-helper-screenshots::-webkit-scrollbar {
+    height: 5px;
+  }
+  
+  #exam-helper-screenshots::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+  }
+  
+  .screenshot-thumbnail {
+    flex: 0 0 auto;
+    width: 90px;
+    height: 60px;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .screenshot-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  #exam-helper-analysis {
+    padding: 12px;
+    overflow-y: auto;
+    max-height: 300px;
+    flex-grow: 1;
+    font-size: 14px;
+    line-height: 1.4;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+    white-space: pre-wrap;
+  }
+  
+  #exam-helper-analysis::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  #exam-helper-analysis::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+  }
+  
+  #exam-helper-shortcuts {
+    display: flex;
+    justify-content: space-around;
+    padding: 5px 10px;
+    background-color: rgba(0, 0, 0, 0.3);
+    font-size: 11px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  #exam-helper-shortcuts span {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-family: monospace;
+  }
+  
+  .placeholder {
+    color: rgba(255, 255, 255, 0.5);
+    font-style: italic;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .loading {
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .error {
+    background-color: rgba(255, 70, 70, 0.3);
+    padding: 8px;
+    border-radius: 4px;
+    margin: 5px 0;
+  }
