@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "Exam Helper",
+    "name": "Helper",
     "version": "1.0",
-    "description": "Screenshot and analyze exam content",
+    "description": "Screenshot and analyze content",
     "permissions": [
         "activeTab",
         "storage",
