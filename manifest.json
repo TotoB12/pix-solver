@@ -54,7 +54,8 @@
         {
             "resources": [
                 "images/*",
-                "html2canvas.min.js"
+                "html2canvas.min.js",
+                "generative-ai.js"
             ],
             "matches": [
                 "<all_urls>"

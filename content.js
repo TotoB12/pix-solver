@@ -183,40 +183,75 @@ async function analyzeScreenshots() {
     });
 }
 
-// Function to call our serverless function that interfaces with Gemini API
-async function callGeminiAPI(screenshots) {
-    // This would normally call your own backend API that has your Gemini API key
-    // For demonstration, we'll simulate a response
-
-    // In a real implementation, you'd set up a Cloud Function, AWS Lambda, or similar
-    // that receives the screenshots and calls the Gemini API with your key
-
-    // For example:
-    /*
-    const response = await fetch('https://your-cloud-function-url.com/analyze', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        screenshots: screenshots,
-        prompt: "Please analyze the image(s) and provide the answer to the problem or question shown. Be concise and direct."
-      }),
+// Helper function to get the Gemini API key from storage
+function getGeminiApiKey() {
+    return new Promise((resolve) => {
+        chrome.storage.local.get(["geminiApiKey"], (result) => {
+            resolve(result.geminiApiKey || "");
+        });
     });
-    
-    if (!response.ok) {
-      throw new Error('API request failed');
+}
+
+// Analyze screenshots using Gemini API (updated implementation)
+async function callGeminiAPI(screenshots) {
+    const apiKey = await getGeminiApiKey();
+    if (!apiKey) {
+        throw new Error("No Gemini API key set. Please add your key in the popup.");
     }
-    
-    const data = await response.json();
-    return data.result;
-    */
 
-    // Simulated response for demonstration
-    await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate API delay
+    // Dynamically import the GoogleGenerativeAI library and related constants
+    const { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } = await import(chrome.runtime.getURL('generative-ai.js'));
 
-    // This is just a placeholder - in reality the Gemini API would analyze your screenshots
-    return "Based on the image, the answer is: [Sample analysis result would appear here from Gemini API]. The solution involves calculating the derivative of the function and setting it equal to zero to find critical points.";
+    // Initialize the Gemini model with your API key and desired configuration
+    const genAI = new GoogleGenerativeAI(apiKey);
+    const model = genAI.getGenerativeModel({
+        model: "gemini-2.0-flash",
+        generationConfig: {
+            temperature: 0.69
+        },
+        safetySettings: [
+            {
+                category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+                threshold: HarmBlockThreshold.BLOCK_NONE,
+            },
+            {
+                category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+                threshold: HarmBlockThreshold.BLOCK_NONE,
+            },
+            {
+                category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+                threshold: HarmBlockThreshold.BLOCK_NONE,
+            },
+            {
+                category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+                threshold: HarmBlockThreshold.BLOCK_NONE,
+            },
+        ],
+        systemInstruction: "Analyze the provided screenshots for questions and problems. Provide the answer concisely."
+    });
+
+    // Prepare image parts by stripping the data URL prefix and setting MIME type
+    const imageContents = screenshots.map(screenshot => {
+        const base64Data = screenshot.split(',')[1];
+        return {
+            inlineData: {
+                data: base64Data,
+                mimeType: 'image/png'
+            }
+        };
+    });
+
+    // Build the parts for the request: a text prompt plus the images
+    const parts = [
+        { text: "Please analyze the image(s) and provide the answer to the exam question shown. Be concise and direct." },
+        ...imageContents
+    ];
+
+    // Call Gemini API and return the response text
+    const response = await model.generateContent({
+        contents: [{ role: "user", parts }]
+    });
+    return response.response.text();
 }
 
 // Clear all screenshots and analysis
